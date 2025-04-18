@@ -1,5 +1,9 @@
 import "dotenv/config";
-import { getMovieCrew, findMainActorData, getActorsName } from "./movie-service.js";
+import {
+  getMovieCrew,
+  findMainActorData,
+  getActorsName,
+} from "./movie-crew-service.js";
 import { getMovieGenre } from "./movie-info-service.js";
 import { saveDocToDatabase } from "./file-writer-service.js";
 
@@ -17,11 +21,11 @@ export async function organizeDataForEachMovie(movies) {
 async function organizeMovieData(movie) {
   const movieCrew = await getMovieCrew(movie.id);
   const genre = await getMovieGenre(movie.id);
-  const movieDirector = movieCrew.crew[0];
-  const mainActorData = await findMainActorData(movieCrew.cast[0].id);
+  const movieDirector = movieCrew?.crew[0];
+  const mainActorData = await findMainActorData(movieCrew?.cast[0]?.id);
   const movieDataObj = {
-    titulo: movie.original_title,
-    ano: movie.release_date,
+    titulo: movie?.original_title,
+    ano: movie?.release_date,
     genero: genre,
     diretor: movieDirector?.name,
     nota: movie.vote_average,
