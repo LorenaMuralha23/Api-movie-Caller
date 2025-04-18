@@ -1,7 +1,7 @@
 import "dotenv/config";
 import fetch from "node-fetch";
 
-export async function findActors(movieID) {
+export async function getMovieCrew(movieID) {
   console.log("👀 Buscando os atores do filme do id: ", movieID);
   const response = await fetch(
     `${process.env.API_ACTORS_URL}/${movieID}/credits?language=pt-BR`,
@@ -18,7 +18,7 @@ export async function findActors(movieID) {
   }
 
   const data = await response.json();
-  return data.cast;
+  return data;
 }
 
 export async function findMainActorData(actorId) {
@@ -42,7 +42,7 @@ export async function findMainActorData(actorId) {
   return data;
 }
 
-function getActorsName(actors) {
+export function getActorsName(actors) {
   const actorsNames = [];
   for (let i = 1; i < actors.length; i++) {
     actorsNames.push(actors[i].name);
@@ -52,9 +52,7 @@ function getActorsName(actors) {
 
 export async function getMainActorData(movieID) {
   console.log("id recebido: ", movieID);
-  const movieActors = await findActors(movieID);
-  const actorsNames = getActorsName(movieActors);
-  console.log(actorsNames);
+  const movieCrew = await getMovieCrew(movieID);
   const mainActorData = await findMainActorData(movieActors[0].id);
-  //   return mainActorData;
+  return mainActorData;
 }

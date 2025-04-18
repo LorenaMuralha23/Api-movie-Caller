@@ -1,0 +1,50 @@
+import "dotenv/config";
+import { getMovieCrew, findMainActorData, getActorsName } from "./findActor.js";
+import { getMovieGenre } from "./fetchCinemaAPI.js";
+
+export async function organizeDataForEachMovie(movies) {
+  //TO DO:
+  //Para cada resultado por página:
+  //Mapear os dados do filme em si
+  //Mapear os dados do ator principal
+  //Mapear os dos atores coadjuvantes
+  for (let page = 0; page < movies.length; page++) {
+    for (let result = 0; result < movies[page].results.length; result++) {
+      const movieData = await organizeMovieData(movies[page].results[result]);
+      console.log(movieData);
+    }
+  }
+}
+
+async function organizeMovieData(movie) {
+  const movieCrew = await getMovieCrew(movie.id);
+  const genre = await getMovieGenre(movie.id);
+  const movieDirector = movieCrew.crew[0];
+  const mainActorData = await findMainActorData(movieCrew.cast[0].id);
+  const movieDataObj = {
+    titulo: movie.original_title,
+    ano: movie.release_date,
+    genero: genre,
+    diretor: movieDirector?.name,
+    nota: movie.vote_average,
+    dataLancamento: movie.release_date,
+  };
+  const mainActorDataObj = {
+    nome: mainActorData.name,
+    idade: getActorAge(mainActorData.birthday),
+    nacionalidade: mainActorData.place_of_birth,
+  };
+  const otherActorsObj = getActorsName(movieCrew.cast);
+  const data = {
+    ...movieDataObj,
+    atorPrincipal: mainActorDataObj,
+    atoresCoadjuvantes: otherActorsObj,
+  };
+  return data;
+}
+
+function getActorAge(birthDate) {
+  const anoNascimento = new Date(birthDate).getFullYear();
+  const anoAtual = new Date().getFullYear();
+  return anoAtual - anoNascimento;
+}
