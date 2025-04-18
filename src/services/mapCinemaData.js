@@ -1,19 +1,17 @@
 import "dotenv/config";
 import { getMovieCrew, findMainActorData, getActorsName } from "./findActor.js";
 import { getMovieGenre } from "./fetchCinemaAPI.js";
+import { saveDocToDatabase } from "./saveToFile.js";
 
 export async function organizeDataForEachMovie(movies) {
-  //TO DO:
-  //Para cada resultado por página:
-  //Mapear os dados do filme em si
-  //Mapear os dados do ator principal
-  //Mapear os dos atores coadjuvantes
+  const docToDatabase = [];
   for (let page = 0; page < movies.length; page++) {
     for (let result = 0; result < movies[page].results.length; result++) {
       const movieData = await organizeMovieData(movies[page].results[result]);
-      console.log(movieData);
+      docToDatabase.push(movieData);
     }
   }
+  saveDocToDatabase(docToDatabase);
 }
 
 async function organizeMovieData(movie) {

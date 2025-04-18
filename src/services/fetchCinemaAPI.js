@@ -45,7 +45,6 @@ export async function getAllMovies() {
   );
 
   for (let page = 1; page <= totalPages; page++) {
-    console.log(`🔍 Buscando filmes na página ${page}...`);
     const movies = await fetchCinemaAPI(page);
     allMovies.push(movies);
 
