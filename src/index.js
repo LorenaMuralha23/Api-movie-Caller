@@ -1,7 +1,7 @@
 import "dotenv/config"; // carrega variáveis do .env
 
-import { getAllMovies } from "./services/fetchCinemaAPI.js";
-import { organizeDataForEachMovie } from "./services/mapCinemaData.js";
+import { getAllMovies } from "./services/movie-info-service.js";
+import { organizeDataForEachMovie } from "./services/data-mapper-service.js";
 
 async function main() {
   try {

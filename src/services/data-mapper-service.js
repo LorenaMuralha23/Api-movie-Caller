@@ -1,7 +1,7 @@
 import "dotenv/config";
-import { getMovieCrew, findMainActorData, getActorsName } from "./findActor.js";
-import { getMovieGenre } from "./fetchCinemaAPI.js";
-import { saveDocToDatabase } from "./saveToFile.js";
+import { getMovieCrew, findMainActorData, getActorsName } from "./movie-service.js";
+import { getMovieGenre } from "./movie-info-service.js";
+import { saveDocToDatabase } from "./file-writer-service.js";
 
 export async function organizeDataForEachMovie(movies) {
   const docToDatabase = [];
