@@ -42,9 +42,19 @@ export async function findMainActorData(actorId) {
   return data;
 }
 
+function getActorsName(actors) {
+  const actorsNames = [];
+  for (let i = 1; i < actors.length; i++) {
+    actorsNames.push(actors[i].name);
+  }
+  return actorsNames;
+}
+
 export async function getMainActorData(movieID) {
   console.log("id recebido: ", movieID);
   const movieActors = await findActors(movieID);
+  const actorsNames = getActorsName(movieActors);
+  console.log(actorsNames);
   const mainActorData = await findMainActorData(movieActors[0].id);
-  return mainActorData;
+  //   return mainActorData;
 }

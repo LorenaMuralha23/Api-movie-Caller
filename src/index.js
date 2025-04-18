@@ -8,7 +8,7 @@ async function main() {
     console.log("🔄 Buscando dados da API...");
     const allMovies = await getAllMovies();
     console.log("✅ Processo finalizado com sucesso!");
-    
+    await getMainActorData(allMovies[0].results[1].id);
   } catch (error) {
     console.error("❌ Erro durante execução:", error.message);
   }
