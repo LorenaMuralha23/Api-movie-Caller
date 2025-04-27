@@ -3,7 +3,7 @@ import fetch from "node-fetch";
 
 export async function getMovieCrew(movieID) {
   const response = await fetch(
-    `${process.env.API_ACTORS_URL}/${movieID}/credits?language=pt-BR`,
+    `${process.env.API_ACTORS_URL}/${movieID}/credits?language=en-US`,
     {
       method: "GET",
       headers: {
@@ -13,7 +13,7 @@ export async function getMovieCrew(movieID) {
     }
   );
   if (!response.ok) {
-    throw new Error(`Erro na API: ${response.status}`);
+    return;
   }
 
   const data = await response.json();
@@ -33,7 +33,7 @@ export async function findMainActorData(actorId) {
   );
 
   if (!response.ok) {
-    throw new Error(`Erro na API: ${response.status}`);
+    console.log("ID do ator que deu erro: ", actorId);
   }
 
   const data = await response.json();

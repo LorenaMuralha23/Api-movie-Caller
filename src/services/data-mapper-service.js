@@ -32,7 +32,7 @@ async function organizeMovieData(movie) {
     dataLancamento: movie.release_date,
   };
   const mainActorDataObj = {
-    nome: mainActorData.name,
+    nome: mainActorData?.name || "",
     idade: getActorAge(mainActorData.birthday),
     nacionalidade: mainActorData.place_of_birth,
   };
